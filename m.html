@@ -246,13 +246,6 @@
       box-shadow:0 20px 38px rgba(212,175,55,.3);
     }
 
-    .btn-dark{
-      background:rgba(8,8,8,.52);
-      color:var(--text);
-      border:1px solid rgba(255,215,120,.12);
-      backdrop-filter:blur(10px);
-    }
-
     .btn-whatsapp{
       background:linear-gradient(135deg,#35d56d,var(--whatsapp));
       color:#041109;
@@ -443,11 +436,6 @@
       text-decoration:line-through;
     }
 
-    .period.limited{
-      background:rgba(245,223,139,.08);
-      color:#f5df8b;
-    }
-
     .booking-foot{
       display:flex;
       align-items:center;
@@ -625,7 +613,7 @@
       left:24px;
       bottom:106px;
       z-index:79;
-      width:min(380px, calc(100% - 32px));
+      width:min(390px, calc(100% - 32px));
       background:linear-gradient(180deg, rgba(14,14,14,.98), rgba(8,8,8,.99));
       border:1px solid rgba(255,215,120,.12);
       border-radius:28px;
@@ -670,7 +658,7 @@
     }
 
     .chat-body{
-      height:320px;
+      height:340px;
       overflow:auto;
       padding:16px;
       display:flex;
@@ -679,14 +667,15 @@
       background:
         radial-gradient(circle at top left, rgba(212,175,55,.04), transparent 20%),
         transparent;
+      scroll-behavior:smooth;
     }
 
     .msg{
-      max-width:85%;
+      max-width:86%;
       padding:12px 14px;
       border-radius:18px;
       font-size:14px;
-      line-height:1.8;
+      line-height:1.9;
       white-space:pre-wrap;
     }
 
@@ -704,24 +693,32 @@
       font-weight:700;
     }
 
-    .quick-questions{
+    .typing{
       display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      padding:0 16px 14px;
+      align-items:center;
+      gap:6px;
+      width:max-content;
+      padding:12px 14px;
+      border-radius:18px;
+      background:#121212;
+      border:1px solid rgba(255,215,120,.08);
+      align-self:flex-start;
     }
 
-    .quick{
-      border:none;
-      cursor:pointer;
-      padding:10px 12px;
-      border-radius:999px;
-      background:#111;
-      color:#f3e7c7;
-      border:1px solid rgba(255,215,120,.08);
-      font-family:inherit;
-      font-size:12px;
-      font-weight:700;
+    .typing span{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#d8ba62;
+      animation:bounce 1s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(2){ animation-delay:.15s; }
+    .typing span:nth-child(3){ animation-delay:.3s; }
+
+    @keyframes bounce{
+      0%,80%,100%{ transform:scale(.7); opacity:.4; }
+      40%{ transform:scale(1); opacity:1; }
     }
 
     .chat-input{
@@ -1110,20 +1107,12 @@
 
   <div class="chatbox" id="chatbox">
     <div class="chat-head">
-      <h4>مساعد Orian</h4>
+      <h4>مساعد Orian AI</h4>
       <span>متصل الآن</span>
     </div>
 
     <div class="chat-body" id="chatBody">
-      <div class="msg bot">مرحباً بك في Orian Resort. كيف أقدر أخدمك اليوم؟</div>
-      <div class="msg bot">أقدر أجاوبك عن الأسعار، المرافق، الأيام المتاحة، ورقم التواصل.</div>
-    </div>
-
-    <div class="quick-questions">
-      <button class="quick" onclick="quickAsk('كم الأسعار؟')">كم الأسعار؟</button>
-      <button class="quick" onclick="quickAsk('ما مميزات الشاليه؟')">مميزات الشاليه</button>
-      <button class="quick" onclick="quickAsk('ايش الأيام المتاحة؟')">الأيام المتاحة</button>
-      <button class="quick" onclick="quickAsk('أبغى رقم التواصل')">رقم التواصل</button>
+      <div class="msg bot">مرحباً بك في Orian Resort، أنا مساعدك الذكي داخل الموقع. أقدر أفهم استفسارك وأرد عليك بطريقة واضحة واحترافية بخصوص الحجز والأسعار والمرافق والأيام المتاحة.</div>
     </div>
 
     <div class="chat-input">
@@ -1136,14 +1125,36 @@
 
   <script>
     let selectedDay = "";
+    const resortPhoneDisplay = "050 000 0000";
+    const resortPhoneWa = "966500000000";
+
+    const memory = {
+      userName: "",
+      phone: "",
+      guests: "",
+      type: "",
+      selectedDay: "",
+      notes: "",
+      lastTopic: ""
+    };
 
     document.querySelectorAll(".day-card").forEach(card => {
       card.addEventListener("click", () => {
         document.querySelectorAll(".day-card").forEach(c => c.classList.remove("active"));
         card.classList.add("active");
         selectedDay = card.dataset.day;
+        memory.selectedDay = selectedDay;
       });
     });
+
+    function syncMemoryFromForm(){
+      memory.userName = document.getElementById("name").value.trim();
+      memory.phone = document.getElementById("phone").value.trim();
+      memory.guests = document.getElementById("guests").value;
+      memory.type = document.getElementById("type").value;
+      memory.notes = document.getElementById("notes").value.trim();
+      memory.selectedDay = selectedDay;
+    }
 
     function showToast(text){
       const toast = document.getElementById("toast");
@@ -1156,10 +1167,11 @@
     }
 
     function bookNow(){
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
+      syncMemoryFromForm();
+      const name = memory.userName;
+      const phone = memory.phone;
 
-      if(!name || !phone || !selectedDay){
+      if(!name || !phone || !memory.selectedDay){
         showToast("أكمل الاسم والجوال واختر اليوم المناسب");
         return;
       }
@@ -1171,11 +1183,6 @@
       document.getElementById("chatbox").classList.toggle("open");
     }
 
-    function quickAsk(text){
-      document.getElementById("chatInput").value = text;
-      sendMessage();
-    }
-
     function addMessage(text, type){
       const body = document.getElementById("chatBody");
       const div = document.createElement("div");
@@ -1185,34 +1192,202 @@
       body.scrollTop = body.scrollHeight;
     }
 
-    function getBotReply(msg){
-      const text = msg.toLowerCase();
+    function addTyping(){
+      const body = document.getElementById("chatBody");
+      const typing = document.createElement("div");
+      typing.className = "typing";
+      typing.id = "typingIndicator";
+      typing.innerHTML = "<span></span><span></span><span></span>";
+      body.appendChild(typing);
+      body.scrollTop = body.scrollHeight;
+    }
 
-      if (text.includes("سعر") || text.includes("الأسعار") || text.includes("بكم")) {
-        return "الأسعار تبدأ من 550 ريال وتختلف حسب نوع الحجز واليوم والفترة المختارة.";
+    function removeTyping(){
+      const el = document.getElementById("typingIndicator");
+      if(el) el.remove();
+    }
+
+    function fillBookingSample(){
+      document.getElementById("name").value = "عبدالله";
+      document.getElementById("phone").value = "05xxxxxxxx";
+      document.getElementById("notes").value = "أبغى تجهيز بسيط قبل الوصول";
+      document.getElementById("booking").scrollIntoView({behavior:"smooth"});
+      syncMemoryFromForm();
+    }
+
+    function goToWhatsapp(customText){
+      const url = `https://wa.me/${resortPhoneWa}?text=${encodeURIComponent(customText)}`;
+      window.open(url, "_blank");
+    }
+
+    function getAvailabilityText(){
+      return "حالياً عندنا الأحد متاح في الفترة المسائية، والإثنين متاح بالكامل، والثلاثاء متاح في الفترة المسائية، والأربعاء متاح في الفترة الصباحية، والخميس متاح بالكامل.";
+    }
+
+    function getFeaturesText(){
+      return "الشاليه يضم مسبح خاص، جلسات خارجية راقية، صالة داخلية واسعة، مطبخ مجهز، خصوصية عالية، ومواقف مريحة للضيوف.";
+    }
+
+    function smartIntro(){
+      const intros = [
+        "أكيد، ",
+        "طبعاً، ",
+        "أكيد يا هلا، ",
+        "يسعدني أوضح لك، ",
+        "بكل سرور، "
+      ];
+      return intros[Math.floor(Math.random() * intros.length)];
+    }
+
+    function smartEnding(){
+      const endings = [
+        " وإذا حبيت أكمل معك خطوة بخطوة أنا حاضر.",
+        " وإذا ودك أساعدك في الحجز مباشرة أقدر أوجهك.",
+        " وإذا عندك استفسار ثاني عن الشاليه أنا موجود.",
+        " وإذا رغبت أشرح لك بشكل أدق أكثر أنا جاهز.",
+        " وإذا حاب أكمل معك للتأكيد أو الواتساب أقدر."
+      ];
+      return endings[Math.floor(Math.random() * endings.length)];
+    }
+
+    function getSmartReply(message){
+      syncMemoryFromForm();
+      const text = message.toLowerCase().trim();
+
+      const wantsPrice = /سعر|الأسعار|بكم|كم/.test(text);
+      const wantsContact = /رقم|تواصل|جوال|هاتف|اتصال/.test(text);
+      const wantsWhatsapp = /واتساب|واتس|whatsapp/.test(text);
+      const wantsFeatures = /مميزات|خدمات|مرافق|فيه|يوجد/.test(text);
+      const wantsAvailability = /يوم|أيام|متاح|المتاح|فاضي|متى متاح|وش المتاح|ايش المتاح/.test(text);
+      const wantsBooking = /حجز|احجز|أبغى أحجز|ابي احجز|طريقة الحجز|كيف أحجز|كيف احجز|ابغى حجز/.test(text);
+      const asksName = /اسمك|من أنت|مين أنت|من انت/.test(text);
+      const thanks = /شكرا|مشكور|يعطيك العافيه|يعطيك العافية/.test(text);
+      const greeting = /السلام|هلا|اهلا|مرحبا|يا هلا/.test(text);
+
+      if (asksName) {
+        memory.lastTopic = "identity";
+        return "أنا مساعد Orian AI، انا هنت عشان أساعدك بايش حاب اخدمك .";
       }
 
-      if (text.includes("رقم") || text.includes("تواصل") || text.includes("جوال")) {
-        return "رقم التواصل المباشر: 050 000 0000 ويمكنك أيضاً التواصل عبر زر الواتساب في الصفحة.";
+      if (greeting) {
+        memory.lastTopic = "greeting";
+        return "ياهلا وسهلا بك في Orian Resort، نورت المكان. اكتب أي استفسار عندك وأنا أجاوبك مباشرة بطريقة واضحة ومختصرة أو مفصلة حسب طلبك.";
       }
 
-      if (text.includes("واتساب")) {
-        return "تقدر تتواصل مباشرة عبر زر الواتساب الظاهر في الموقع وسيتم الرد عليك بسرعة.";
+      if (wantsPrice) {
+        memory.lastTopic = "price";
+        return smartIntro() + "الأسعار تبدأ من 550 ريال، وتختلف حسب نوع الحجز واليوم والفترة المختارة. لو حبيت أقدر أوضح لك السعر الأقرب بناءً على اليوم اللي يناسبك." + smartEnding();
       }
 
-      if (text.includes("مميزات") || text.includes("خدمات") || text.includes("مرافق")) {
-        return "يوجد مسبح خاص، جلسات خارجية راقية، صالة داخلية واسعة، مطبخ مجهز، خصوصية عالية، ومواقف مريحة.";
+      if (wantsContact && wantsWhatsapp) {
+        memory.lastTopic = "contact";
+        return smartIntro() + `رقم الواتساب المباشر هو ${resortPhoneDisplay}، وتقدر أيضاً تضغط على زر الواتساب الموجود في الصفحة للتواصل الفوري مع إدارة الحجز.` + smartEnding();
       }
 
-      if (text.includes("يوم") || text.includes("أيام") || text.includes("متاح")) {
-        return "المتاح حالياً: الأحد مساءً، الإثنين بالكامل، الثلاثاء مساءً، الأربعاء صباحاً، والخميس بالكامل.";
+      if (wantsContact) {
+        memory.lastTopic = "contact";
+        return smartIntro() + `رقم التواصل المباشر هو ${resortPhoneDisplay}. وإذا رغبت أقدر أوجهك مباشرة إلى الواتساب حتى يكون التواصل أسرع وأسهل.` + smartEnding();
       }
 
-      if (text.includes("حجز") || text.includes("احجز")) {
-        return "اختر اليوم المناسب من جدول التوفر ثم اكتب الاسم ورقم الجوال واضغط على تأكيد الحجز.";
+      if (wantsWhatsapp) {
+        memory.lastTopic = "whatsapp";
+        return smartIntro() + "عندك زر واتساب مباشر داخل الموقع، ومن خلاله تقدر ترسل استفسارك أو تطلب الحجز بشكل سريع بدون أي خطوات معقدة." + smartEnding();
       }
 
-      return "يسعدني خدمتك. تقدر تسألني عن الأسعار أو مميزات الشاليه أو الأيام المتاحة أو رقم التواصل.";
+      if (wantsFeatures) {
+        memory.lastTopic = "features";
+        return smartIntro() + getFeaturesText() + " المكان مصمم بحيث يجمع بين الراحة والفخامة والخصوصية في نفس الوقت." + smartEnding();
+      }
+
+      if (wantsAvailability) {
+        memory.lastTopic = "availability";
+        return smartIntro() + getAvailabilityText() + " وإذا حبيت، أقدر أساعدك تختار اليوم الأنسب حسب نوع المناسبة أو عدد الضيوف." + smartEnding();
+      }
+
+      if (wantsBooking) {
+        memory.lastTopic = "booking";
+        if (memory.selectedDay && memory.userName && memory.phone) {
+          return smartIntro() + `بياناتك الحالية شبه مكتملة، واليوم المختار حالياً هو ${memory.selectedDay}. بقي عليك فقط الضغط على زر تأكيد الحجز لإرسال الطلب بشكل مباشر.` + smartEnding();
+        }
+        if (memory.selectedDay) {
+          return smartIntro() + `تم اختيار ${memory.selectedDay} كخيار حالي. الآن فقط اكتب الاسم ورقم الجوال ثم اضغط على تأكيد الحجز لإكمال الطلب.` + smartEnding();
+        }
+        return smartIntro() + "طريقة الحجز بسيطة جداً: اختر اليوم المناسب من جدول التوفر، ثم اكتب الاسم ورقم الجوال، وبعدها اضغط على تأكيد الحجز. بعد ذلك يتم التواصل معك لاستكمال التفاصيل إذا لزم الأمر." + smartEnding();
+      }
+
+      if (/وش اخترت|ايش اخترت|اليوم المختار|اختياري/.test(text)) {
+        memory.lastTopic = "selected";
+        return memory.selectedDay
+          ? `اختيارك الحالي هو ${memory.selectedDay}. إذا كان هذا الوقت مناسب لك، أكمل فقط بيانات الاسم ورقم الجوال ثم أكد الحجز.`
+          : "حتى الآن ما تم تحديد يوم. اختر اليوم المناسب من جدول التوفر، وبعدها أقدر أكمل معك بسهولة.";
+      }
+
+      if (/املأ|عبي|جهز البيانات|جرب الحجز/.test(text)) {
+        memory.lastTopic = "fill";
+        fillBookingSample();
+        return "تم تجهيز بيانات تجريبية داخل نموذج الحجز حتى تشوف التجربة بشكل أوضح. تقدر الآن تختار اليوم المناسب وتكمل مباشرة.";
+      }
+
+      if (/مسبح/.test(text)) {
+        memory.lastTopic = "pool";
+        return smartIntro() + "نعم، الشاليه يحتوي على مسبح خاص يمنح الضيوف خصوصية عالية وأجواء راقية، وهو من أبرز المزايا التي تميز التجربة داخل Orian Resort." + smartEnding();
+      }
+
+      if (/خصوصية/.test(text)) {
+        memory.lastTopic = "privacy";
+        return smartIntro() + "الخصوصية من أهم النقاط التي تم الاهتمام بها في الشاليه، سواء من ناحية التصميم أو توزيع الجلسات، حتى يشعر الضيف براحة كاملة طوال فترة الحجز." + smartEnding();
+      }
+
+      if (/صباح/.test(text) || /مساء/.test(text)) {
+        memory.lastTopic = "availability";
+        return smartIntro() + getAvailabilityText() + smartEnding();
+      }
+
+      if (thanks) {
+        memory.lastTopic = "thanks";
+        return "على الرحب والسعة، يسعدني دائماً مساعدتك. إذا حبيت أكمل معك بالحجز أو أوضح لك أي نقطة ثانية عن الشاليه فأنا حاضر.";
+      }
+
+      if (/وش عندكم|عرفني|نبذة|تكلم عن الشاليه/.test(text)) {
+        memory.lastTopic = "overview";
+        return "Orian Resort يقدم تجربة شاليه فاخرة بطابع راقٍ، ويجمع بين المسبح الخاص، الجلسات الخارجية، الصالة الداخلية الواسعة، والخصوصية العالية، مع نظام حجز واضح وتواصل سريع عبر الواتساب.";
+      }
+
+      if (/وش تنصح|وش الأفضل|اي يوم أفضل|وش اليوم المناسب/.test(text)) {
+        memory.lastTopic = "advice";
+        return "إذا كنت تبحث عن مرونة أكبر فالإثنين والخميس ممتازان لأنهما متاحان بالكامل، أما إذا كنت تفضل فترة محددة وسريعة فالأحد أو الثلاثاء في الفترة المسائية خيارات جميلة جداً.";
+      }
+
+      if (/عندي مناسبه|عندي مناسبة|عيد ميلاد|اجتماع|عائله|عائلة/.test(text)) {
+        memory.lastTopic = "occasion";
+        return "ممتاز، الشاليه مناسب جداً للمناسبات الخاصة والجلسات العائلية، خصوصاً مع توفر الجلسات الخارجية والصالة الداخلية الواسعة. إذا ودك أساعدك أختار لك أنسب يوم حسب المناسبة أنا جاهز.";
+      }
+
+      if (memory.lastTopic === "price") {
+        return "إذا كان هدفك معرفة تكلفة أقرب للحجز الفعلي، اذكر لي اليوم أو نوع المناسبة وأنا أجاوبك بصياغة أدق داخل نفس السياق.";
+      }
+
+      if (memory.lastTopic === "availability") {
+        return "أقدر أيضاً أوضح لك أي الأيام أنسب من ناحية المرونة أو أرتب لك طريقة الحجز خطوة بخطوة إذا رغبت.";
+      }
+
+      return "أفهم عليك. أنا هنا كمساعد ذكي داخل Orian Resort، وأقدر أجاوبك عن الأسعار، المرافق، الأيام المتاحة، رقم التواصل، أو طريقة الحجز بشكل واضح واحترافي. اكتب سؤالك بأي أسلوب يناسبك وأنا أتعامل معه مباشرة.";
+    }
+
+    function maybeDoAction(message){
+      const text = message.toLowerCase().trim();
+
+      if (/واتساب|حولني واتساب|تواصل واتساب/.test(text)) {
+        setTimeout(() => {
+          goToWhatsapp("السلام عليكم، أبغى أستفسر عن الحجز في Orian Resort");
+        }, 500);
+      }
+
+      if (/أبغى أحجز الآن|احجز لي|ثبت الحجز|أكيد الحجز/.test(text)) {
+        setTimeout(() => {
+          document.getElementById("booking").scrollIntoView({behavior:"smooth"});
+        }, 400);
+      }
     }
 
     function sendMessage(){
@@ -1222,10 +1397,15 @@
 
       addMessage(value, "user");
       input.value = "";
+      addTyping();
+
+      const reply = getSmartReply(value);
+      maybeDoAction(value);
 
       setTimeout(() => {
-        addMessage(getBotReply(value), "bot");
-      }, 450);
+        removeTyping();
+        addMessage(reply, "bot");
+      }, 700);
     }
 
     document.getElementById("chatInput").addEventListener("keydown", function(e){
