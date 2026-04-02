@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORIAN RESORT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050505;
+      --bg-soft:#0b0b0b;
+      --card:#101010;
+      --card-2:#141414;
+      --line:rgba(255,215,120,.14);
+      --gold:#d4af37;
+      --gold-2:#f5df8b;
+      --gold-3:#8e6b16;
+      --text:#f5f1e6;
+      --muted:#b9ae90;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --radius:24px;
+      --whatsapp:#25D366;
+    }
+
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:"Tajawal",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(212,175,55,.12), transparent 22%),
+        radial-gradient(circle at 20% 10%, rgba(245,223,139,.06), transparent 18%),
+        linear-gradient(180deg, #050505 0%, #090909 42%, #040404 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size:32px 32px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.5), transparent 85%);
+      opacity:.25;
+    }
+
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(18px);
+      background:rgba(5,5,5,.62);
+      border-bottom:1px solid rgba(255,215,120,.08);
+    }
+
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      min-height:82px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      color:#000;
+      font-weight:900;
+      font-size:18px;
+      background:linear-gradient(135deg,var(--gold-2),var(--gold),var(--gold-3));
+      box-shadow:0 10px 25px rgba(212,175,55,.18);
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:1.5px;
+      color:var(--gold-2);
+    }
+
+    .brand-text p{
+      margin:3px 0 0;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:2px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-size:14px;
+      padding:11px 16px;
+      border-radius:999px;
+      border:1px solid transparent;
+      transition:.25s;
+    }
+
+    .nav a:hover{
+      color:var(--gold-2);
+      border-color:rgba(255,215,120,.12);
+      background:rgba(255,255,255,.02);
+    }
+
+    .hero{
+      padding:34px 0 22px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.18fr .82fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .hero-main{
+      position:relative;
+      min-height:600px;
+      border-radius:34px;
+      overflow:hidden;
+      border:1px solid rgba(255,215,120,.1);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.7)),
+        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 80% 18%, rgba(255,215,120,.18), transparent 18%),
+        linear-gradient(180deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,.52) 58%, rgba(0,0,0,.86) 100%);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      height:100%;
+      padding:42px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      width:max-content;
+      margin-bottom:18px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(8,8,8,.42);
+      border:1px solid rgba(255,215,120,.15);
+      color:var(--gold-2);
+      font-size:13px;
+      font-weight:700;
+      backdrop-filter:blur(10px);
+    }
+
+    .hero-content h2{
+      margin:0 0 14px;
+      font-size:64px;
+      line-height:1.02;
+      font-weight:900;
+      max-width:700px;
+      text-shadow:0 10px 40px rgba(0,0,0,.45);
+    }
+
+    .hero-content p{
+      margin:0;
+      max-width:620px;
+      color:#e7dcc0;
+      font-size:18px;
+      line-height:1.9;
+    }
+
+    .hero-actions{
+      margin-top:28px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      border-radius:16px;
+      padding:16px 22px;
+      font-family:inherit;
+      font-size:15px;
+      font-weight:800;
+      transition:.25s;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .btn-gold{
+      background:linear-gradient(135deg,var(--gold-2),var(--gold),#9b7418);
+      color:#060606;
+      box-shadow:0 16px 34px rgba(212,175,55,.24);
+    }
+
+    .btn-gold:hover{
+      transform:translateY(-2px);
+      box-shadow:0 20px 38px rgba(212,175,55,.3);
+    }
+
+    .btn-dark{
+      background:rgba(8,8,8,.52);
+      color:var(--text);
+      border:1px solid rgba(255,215,120,.12);
+      backdrop-filter:blur(10px);
+    }
+
+    .btn-whatsapp{
+      background:linear-gradient(135deg,#35d56d,var(--whatsapp));
+      color:#041109;
+      box-shadow:0 16px 34px rgba(37,211,102,.18);
+    }
+
+    .hero-side{
+      display:grid;
+      gap:22px;
+    }
+
+    .info-card, .booking-card, .section-card, .gallery-card, .testimonial-card{
+      background:linear-gradient(180deg, rgba(18,18,18,.95), rgba(10,10,10,.97));
+      border:1px solid rgba(255,215,120,.08);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .info-card{
+      padding:24px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      min-height:180px;
+    }
+
+    .mini-stat{
+      padding:16px;
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,215,120,.08);
+    }
+
+    .mini-stat span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:10px;
+    }
+
+    .mini-stat strong{
+      font-size:24px;
+      color:var(--gold-2);
+      font-weight:900;
+    }
+
+    .booking-card{
+      padding:24px;
+    }
+
+    .card-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .card-title h3{
+      margin:0;
+      font-size:24px;
+      font-weight:900;
+      color:var(--gold-2);
+    }
+
+    .badge{
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      color:#f6ebc7;
+      border:1px solid rgba(255,215,120,.12);
+      background:rgba(255,215,120,.05);
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      color:#ddcfaa;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .input, .select, .textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      background:#0d0d0d;
+      color:var(--text);
+      border-radius:16px;
+      padding:15px 16px;
+      font-family:inherit;
+      font-size:15px;
+      border:1px solid rgba(255,215,120,.08);
+      transition:.2s;
+    }
+
+    .input:focus, .select:focus, .textarea:focus{
+      border-color:rgba(255,215,120,.35);
+      box-shadow:0 0 0 4px rgba(212,175,55,.07);
+    }
+
+    .days-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .day-card{
+      border:1px solid rgba(255,215,120,.08);
+      background:#0d0d0d;
+      border-radius:20px;
+      padding:16px;
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .day-card:hover{
+      border-color:rgba(255,215,120,.2);
+      transform:translateY(-2px);
+    }
+
+    .day-card.active{
+      background:linear-gradient(180deg, rgba(212,175,55,.12), rgba(212,175,55,.04));
+      border-color:rgba(255,215,120,.34);
+      box-shadow:0 12px 28px rgba(212,175,55,.08);
+    }
+
+    .day-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .day-name{
+      font-size:18px;
+      font-weight:900;
+      color:var(--gold-2);
+    }
+
+    .day-status{
+      font-size:12px;
+      font-weight:800;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,215,120,.12);
+      background:rgba(255,215,120,.05);
+      color:#f3e4b6;
+    }
+
+    .day-periods{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .period{
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:13px;
+      font-weight:700;
+      border:1px solid rgba(255,215,120,.08);
+      background:#121212;
+      color:#eee0bc;
+    }
+
+    .period.available{
+      background:rgba(212,175,55,.08);
+      color:#f7ebc4;
+    }
+
+    .period.booked{
+      opacity:.45;
+      text-decoration:line-through;
+    }
+
+    .period.limited{
+      background:rgba(245,223,139,.08);
+      color:#f5df8b;
+    }
+
+    .booking-foot{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-top:18px;
+      flex-wrap:wrap;
+    }
+
+    .availability{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .contact-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .contact-box{
+      flex:1;
+      min-width:220px;
+      padding:16px;
+      border-radius:18px;
+      background:#0d0d0d;
+      border:1px solid rgba(255,215,120,.08);
+    }
+
+    .contact-box span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .contact-box strong{
+      color:var(--gold-2);
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .sections{
+      padding:8px 0 28px;
+    }
+
+    .sections-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+    }
+
+    .section-card{
+      padding:24px;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:10px;
+    }
+
+    .feature{
+      padding:18px;
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,215,120,.08);
+    }
+
+    .feature strong{
+      display:block;
+      color:var(--gold-2);
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .feature p{
+      margin:0;
+      color:#d7ccb0;
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .gallery-card{
+      padding:18px;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:8px;
+    }
+
+    .gallery-item{
+      position:relative;
+      min-height:180px;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,215,120,.08);
+      background:#0d0d0d;
+    }
+
+    .gallery-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:brightness(.82);
+      transition:transform .45s;
+    }
+
+    .gallery-item:hover img{
+      transform:scale(1.06);
+    }
+
+    .gallery-item span{
+      position:absolute;
+      right:14px;
+      bottom:14px;
+      background:rgba(0,0,0,.45);
+      color:#f7efda;
+      border:1px solid rgba(255,215,120,.1);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      backdrop-filter:blur(8px);
+    }
+
+    .testimonial-card{
+      margin-top:22px;
+      padding:24px;
+    }
+
+    .testimonial{
+      padding:20px;
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(255,215,120,.08);
+    }
+
+    .testimonial p{
+      margin:0 0 16px;
+      color:#eadfbe;
+      font-size:16px;
+      line-height:2;
+    }
+
+    .testimonial strong{
+      color:var(--gold-2);
+      font-size:15px;
+    }
+
+    .chat-toggle{
+      position:fixed;
+      left:24px;
+      bottom:24px;
+      z-index:80;
+      width:68px;
+      height:68px;
+      border:none;
+      border-radius:24px;
+      cursor:pointer;
+      font-size:24px;
+      color:#050505;
+      background:linear-gradient(135deg,var(--gold-2),var(--gold),#9c7419);
+      box-shadow:0 18px 40px rgba(212,175,55,.28);
+    }
+
+    .chatbox{
+      position:fixed;
+      left:24px;
+      bottom:106px;
+      z-index:79;
+      width:min(380px, calc(100% - 32px));
+      background:linear-gradient(180deg, rgba(14,14,14,.98), rgba(8,8,8,.99));
+      border:1px solid rgba(255,215,120,.12);
+      border-radius:28px;
+      box-shadow:0 30px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+      display:none;
+    }
+
+    .chatbox.open{
+      display:block;
+      animation:up .22s ease;
+    }
+
+    @keyframes up{
+      from{transform:translateY(18px); opacity:0}
+      to{transform:translateY(0); opacity:1}
+    }
+
+    .chat-head{
+      padding:18px 18px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:linear-gradient(135deg, rgba(212,175,55,.12), rgba(255,255,255,.01));
+      border-bottom:1px solid rgba(255,215,120,.08);
+    }
+
+    .chat-head h4{
+      margin:0;
+      font-size:18px;
+      color:var(--gold-2);
+      font-weight:900;
+    }
+
+    .chat-head span{
+      font-size:12px;
+      color:#e6dab5;
+      background:rgba(255,215,120,.08);
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,215,120,.1);
+    }
+
+    .chat-body{
+      height:320px;
+      overflow:auto;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      background:
+        radial-gradient(circle at top left, rgba(212,175,55,.04), transparent 20%),
+        transparent;
+    }
+
+    .msg{
+      max-width:85%;
+      padding:12px 14px;
+      border-radius:18px;
+      font-size:14px;
+      line-height:1.8;
+      white-space:pre-wrap;
+    }
+
+    .msg.bot{
+      align-self:flex-start;
+      background:#121212;
+      border:1px solid rgba(255,215,120,.08);
+      color:#efe4c7;
+    }
+
+    .msg.user{
+      align-self:flex-end;
+      background:linear-gradient(135deg,var(--gold-2),var(--gold),#a87e1d);
+      color:#050505;
+      font-weight:700;
+    }
+
+    .quick-questions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding:0 16px 14px;
+    }
+
+    .quick{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:999px;
+      background:#111;
+      color:#f3e7c7;
+      border:1px solid rgba(255,215,120,.08);
+      font-family:inherit;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .chat-input{
+      padding:14px;
+      display:flex;
+      gap:10px;
+      border-top:1px solid rgba(255,215,120,.08);
+      background:rgba(0,0,0,.2);
+    }
+
+    .chat-input input{
+      flex:1;
+      border:none;
+      outline:none;
+      padding:14px 15px;
+      border-radius:16px;
+      font-family:inherit;
+      background:#0d0d0d;
+      color:#fff;
+      border:1px solid rgba(255,215,120,.08);
+    }
+
+    .chat-input button{
+      border:none;
+      cursor:pointer;
+      padding:0 18px;
+      border-radius:16px;
+      font-family:inherit;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--gold-2),var(--gold),#a57d1d);
+      color:#050505;
+    }
+
+    .toast{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:100;
+      padding:16px 18px;
+      border-radius:18px;
+      color:#f8f0da;
+      font-weight:700;
+      border:1px solid rgba(255,215,120,.12);
+      background:linear-gradient(180deg, rgba(18,18,18,.98), rgba(10,10,10,.98));
+      box-shadow:var(--shadow);
+      opacity:0;
+      transform:translateY(16px);
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1024px){
+      .hero-grid,
+      .sections-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-main{
+        min-height:540px;
+      }
+
+      .hero-content h2{
+        font-size:50px;
+      }
+    }
+
+    @media (max-width: 640px){
+      .topbar-inner{
+        min-height:74px;
+      }
+
+      .nav{
+        display:none;
+      }
+
+      .hero{
+        padding-top:20px;
+      }
+
+      .hero-main{
+        min-height:480px;
+        border-radius:28px;
+      }
+
+      .hero-content{
+        padding:24px;
+      }
+
+      .hero-content h2{
+        font-size:36px;
+      }
+
+      .hero-content p{
+        font-size:15px;
+      }
+
+      .info-card,
+      .features,
+      .grid-2,
+      .gallery-grid{
+        grid-template-columns:1fr;
+      }
+
+      .booking-card,
+      .section-card,
+      .gallery-card,
+      .testimonial-card{
+        border-radius:24px;
+      }
+
+      .chat-toggle{
+        width:60px;
+        height:60px;
+        border-radius:20px;
+      }
+
+      .contact-row{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">O</div>
+        <div class="brand-text">
+          <h1>ORIAN RESORT</h1>
+          <p>LUXURY CHALETS EXPERIENCE</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#booking">الحجز</a>
+        <a href="#details">المزايا</a>
+        <a href="#gallery">المعرض</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div class="hero-main">
+          <div class="hero-content">
+            <div class="eyebrow">رفاهية استثنائية • خصوصية عالية • تجربة ذهبية</div>
+            <h2>وجهتك الفاخرة<br>لأجمل الأوقات</h2>
+            <p>شاليهات Orian تقدم تجربة راقية بتصميم فاخر، مرافق مميزة، وأيام متاحة واضحة مع حجز سريع وتواصل مباشر عبر الواتساب.</p>
+            <div class="hero-actions">
+              <button class="btn btn-gold" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
+              <a class="btn btn-whatsapp" href="https://wa.me/966500000000?text=السلام%20عليكم%20أبغى%20أستفسر%20عن%20الحجز%20في%20Orian%20Resort" target="_blank">واتساب مباشر</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="info-card">
+            <div class="mini-stat">
+              <span>التقييم العام</span>
+              <strong>4.9 / 5</strong>
+            </div>
+            <div class="mini-stat">
+              <span>عدد المرافق</span>
+              <strong>8 مزايا</strong>
+            </div>
+            <div class="mini-stat">
+              <span>أسعار تبدأ من</span>
+              <strong>550 ريال</strong>
+            </div>
+            <div class="mini-stat">
+              <span>التواصل المباشر</span>
+              <strong>24 / 7</strong>
+            </div>
+          </div>
+
+          <div class="booking-card" id="booking">
+            <div class="card-title">
+              <h3>الحجز الفاخر</h3>
+              <div class="badge">أيام متاحة هذا الأسبوع</div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label>الاسم</label>
+                <input class="input" id="name" placeholder="اكتب الاسم الكامل">
+              </div>
+              <div class="field">
+                <label>رقم الجوال</label>
+                <input class="input" id="phone" placeholder="05xxxxxxxx">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label>نوع الحجز</label>
+                <select class="select" id="type">
+                  <option>شاليه خاص</option>
+                  <option>مناسبة خاصة</option>
+                  <option>جلسة عائلية</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>عدد الضيوف</label>
+                <select class="select" id="guests">
+                  <option>2 - 5 ضيوف</option>
+                  <option>6 - 10 ضيوف</option>
+                  <option>أكثر من 10</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>الأيام والفترات المتاحة</label>
+              <div class="days-grid" id="daysGrid">
+                <div class="day-card" data-day="الأحد - الفترة المسائية">
+                  <div class="day-top">
+                    <div class="day-name">الأحد</div>
+                    <div class="day-status">متاح مساءً</div>
+                  </div>
+                  <div class="day-periods">
+                    <div class="period available">الفترة المسائية</div>
+                    <div class="period booked">الفترة الصباحية</div>
+                  </div>
+                </div>
+
+                <div class="day-card" data-day="الإثنين - الفترتان متاحتان">
+                  <div class="day-top">
+                    <div class="day-name">الإثنين</div>
+                    <div class="day-status">متاح بالكامل</div>
+                  </div>
+                  <div class="day-periods">
+                    <div class="period available">الفترة الصباحية</div>
+                    <div class="period available">الفترة المسائية</div>
+                  </div>
+                </div>
+
+                <div class="day-card" data-day="الثلاثاء - الفترة المسائية">
+                  <div class="day-top">
+                    <div class="day-name">الثلاثاء</div>
+                    <div class="day-status">متاح مساءً</div>
+                  </div>
+                  <div class="day-periods">
+                    <div class="period booked">الفترة الصباحية</div>
+                    <div class="period available">الفترة المسائية</div>
+                  </div>
+                </div>
+
+                <div class="day-card" data-day="الأربعاء - الفترة الصباحية">
+                  <div class="day-top">
+                    <div class="day-name">الأربعاء</div>
+                    <div class="day-status">متاح صباحاً</div>
+                  </div>
+                  <div class="day-periods">
+                    <div class="period available">الفترة الصباحية</div>
+                    <div class="period booked">الفترة المسائية</div>
+                  </div>
+                </div>
+
+                <div class="day-card" data-day="الخميس - متاح بالكامل">
+                  <div class="day-top">
+                    <div class="day-name">الخميس</div>
+                    <div class="day-status">متاح بالكامل</div>
+                  </div>
+                  <div class="day-periods">
+                    <div class="period available">الفترة الصباحية</div>
+                    <div class="period available">الفترة المسائية</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>ملاحظات إضافية</label>
+              <textarea class="textarea" id="notes" rows="4" placeholder="اكتب أي طلب إضافي"></textarea>
+            </div>
+
+            <div class="booking-foot">
+              <div class="availability">✔ اختر اليوم المناسب ثم أكمل بياناتك لتأكيد الطلب</div>
+              <button class="btn btn-gold" style="min-width:180px" onclick="bookNow()">تأكيد الحجز</button>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-box">
+                <span>رقم التواصل</span>
+                <strong>050 000 0000</strong>
+              </div>
+              <a class="btn btn-whatsapp" style="flex:1; min-width:220px;" href="https://wa.me/966500000000?text=السلام%20عليكم%20أبغى%20أحجز%20في%20Orian%20Resort" target="_blank">
+                التواصل عبر واتساب
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="sections" id="details">
+      <div class="container sections-grid">
+
+        <div class="section-card">
+          <div class="card-title">
+            <h3>مميزات الشاليه</h3>
+            <div class="badge">Luxury Features</div>
+          </div>
+
+          <div class="features">
+            <div class="feature">
+              <strong>مسبح خاص</strong>
+              <p>مسبح أنيق يمنح الضيوف خصوصية كاملة وتجربة استرخاء مثالية طوال وقت الحجز.</p>
+            </div>
+            <div class="feature">
+              <strong>جلسات خارجية راقية</strong>
+              <p>جلسات مريحة بإضاءة ليلية فاخرة تناسب السهرات العائلية والأوقات الخاصة.</p>
+            </div>
+            <div class="feature">
+              <strong>صالة داخلية واسعة</strong>
+              <p>مساحة داخلية بتصميم عصري مريح مناسبة للراحة والاستقبال والأجواء الهادئة.</p>
+            </div>
+            <div class="feature">
+              <strong>مطبخ مجهز</strong>
+              <p>مطبخ متكامل يوفّر كل الأساسيات لراحة الضيوف وتجربة أكثر سهولة أثناء الإقامة.</p>
+            </div>
+            <div class="feature">
+              <strong>خصوصية عالية</strong>
+              <p>تصميم يراعي الخصوصية بشكل كامل ليشعر الضيف بالراحة من أول لحظة حتى نهاية الحجز.</p>
+            </div>
+            <div class="feature">
+              <strong>مواقف مريحة</strong>
+              <p>مواقف سيارات سهلة وقريبة من المدخل لتجربة وصول ودخول أكثر سلاسة وأناقة.</p>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="card-title" style="margin-bottom:14px">
+              <h3 style="font-size:22px">آراء الضيوف</h3>
+              <div class="badge">Premium Experience</div>
+            </div>
+            <div class="testimonial">
+              <p>“المكان فعلاً فخم، الجلسات ممتازة والخصوصية عالية جداً، والحجز كان واضح وسهل من أول دقيقة.”</p>
+              <strong>ضيف من المنطقة الشرقية</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="gallery-card" id="gallery">
+            <div class="card-title">
+              <h3>المعرض</h3>
+              <div class="badge">Orian Moments</div>
+            </div>
+
+            <div class="gallery-grid">
+              <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80" alt="">
+                <span>الواجهة الرئيسية</span>
+              </div>
+              <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1201&q=80" alt="">
+                <span>جلسة داخلية</span>
+              </div>
+              <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1202&q=80" alt="">
+                <span>أجواء خارجية</span>
+              </div>
+              <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1203&q=80" alt="">
+                <span>تفاصيل فاخرة</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <button class="chat-toggle" onclick="toggleChat()">✦</button>
+
+  <div class="chatbox" id="chatbox">
+    <div class="chat-head">
+      <h4>مساعد Orian</h4>
+      <span>متصل الآن</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="msg bot">مرحباً بك في Orian Resort. كيف أقدر أخدمك اليوم؟</div>
+      <div class="msg bot">أقدر أجاوبك عن الأسعار، المرافق، الأيام المتاحة، ورقم التواصل.</div>
+    </div>
+
+    <div class="quick-questions">
+      <button class="quick" onclick="quickAsk('كم الأسعار؟')">كم الأسعار؟</button>
+      <button class="quick" onclick="quickAsk('ما مميزات الشاليه؟')">مميزات الشاليه</button>
+      <button class="quick" onclick="quickAsk('ايش الأيام المتاحة؟')">الأيام المتاحة</button>
+      <button class="quick" onclick="quickAsk('أبغى رقم التواصل')">رقم التواصل</button>
+    </div>
+
+    <div class="chat-input">
+      <input id="chatInput" placeholder="اكتب سؤالك هنا">
+      <button onclick="sendMessage()">إرسال</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">تم تأكيد طلب الحجز بنجاح</div>
+
+  <script>
+    let selectedDay = "";
+
+    document.querySelectorAll(".day-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".day-card").forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        selectedDay = card.dataset.day;
+      });
+    });
+
+    function showToast(text){
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    function bookNow(){
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+
+      if(!name || !phone || !selectedDay){
+        showToast("أكمل الاسم والجوال واختر اليوم المناسب");
+        return;
+      }
+
+      showToast("تم تأكيد طلب الحجز بنجاح");
+    }
+
+    function toggleChat(){
+      document.getElementById("chatbox").classList.toggle("open");
+    }
+
+    function quickAsk(text){
+      document.getElementById("chatInput").value = text;
+      sendMessage();
+    }
+
+    function addMessage(text, type){
+      const body = document.getElementById("chatBody");
+      const div = document.createElement("div");
+      div.className = `msg ${type}`;
+      div.textContent = text;
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function getBotReply(msg){
+      const text = msg.toLowerCase();
+
+      if (text.includes("سعر") || text.includes("الأسعار") || text.includes("بكم")) {
+        return "الأسعار تبدأ من 550 ريال وتختلف حسب نوع الحجز واليوم والفترة المختارة.";
+      }
+
+      if (text.includes("رقم") || text.includes("تواصل") || text.includes("جوال")) {
+        return "رقم التواصل المباشر: 050 000 0000 ويمكنك أيضاً التواصل عبر زر الواتساب في الصفحة.";
+      }
+
+      if (text.includes("واتساب")) {
+        return "تقدر تتواصل مباشرة عبر زر الواتساب الظاهر في الموقع وسيتم الرد عليك بسرعة.";
+      }
+
+      if (text.includes("مميزات") || text.includes("خدمات") || text.includes("مرافق")) {
+        return "يوجد مسبح خاص، جلسات خارجية راقية، صالة داخلية واسعة، مطبخ مجهز، خصوصية عالية، ومواقف مريحة.";
+      }
+
+      if (text.includes("يوم") || text.includes("أيام") || text.includes("متاح")) {
+        return "المتاح حالياً: الأحد مساءً، الإثنين بالكامل، الثلاثاء مساءً، الأربعاء صباحاً، والخميس بالكامل.";
+      }
+
+      if (text.includes("حجز") || text.includes("احجز")) {
+        return "اختر اليوم المناسب من جدول التوفر ثم اكتب الاسم ورقم الجوال واضغط على تأكيد الحجز.";
+      }
+
+      return "يسعدني خدمتك. تقدر تسألني عن الأسعار أو مميزات الشاليه أو الأيام المتاحة أو رقم التواصل.";
+    }
+
+    function sendMessage(){
+      const input = document.getElementById("chatInput");
+      const value = input.value.trim();
+      if(!value) return;
+
+      addMessage(value, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        addMessage(getBotReply(value), "bot");
+      }, 450);
+    }
+
+    document.getElementById("chatInput").addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
